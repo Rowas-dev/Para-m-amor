@@ -1,0 +1,2172 @@
+// ======================
+// TEXTURAS
+// ======================
+
+const textureLoader =
+  new THREE.TextureLoader();
+  
+  const painting1 =
+  textureLoader.load(
+    "textures/painting1.jpg"
+  );
+
+const painting2 =
+  textureLoader.load(
+    "textures/painting2.jpg"
+  );
+  const pixel1 =
+  textureLoader.load(
+    "textures/pixel1.jpg"
+  );
+const bookCoverTexture =
+  textureLoader.load(
+    "textures/bookcover.jpg"
+  );
+const finalSong =
+document.getElementById(
+"finalSong"
+);
+
+finalSong.volume = 0.35;
+const pixel2 =
+  textureLoader.load(
+    "textures/pixel2.jpg"
+  );
+  const pixel3 =
+  textureLoader.load(
+    "textures/pixel3.jpg"
+  );
+
+const pixel4 =
+  textureLoader.load(
+    "textures/pixel4.jpg"
+  );
+
+const pixel5 =
+  textureLoader.load(
+    "textures/pixel5.jpg"
+  );
+
+const pixel6 =
+  textureLoader.load(
+    "textures/pixel6.jpg"
+  );
+  
+  const pi1 =
+  textureLoader.load(
+    "textures/pi1.png"
+  );
+  
+  const pi2 =
+  textureLoader.load(
+    "textures/pi2.png"
+  );
+
+const floorTexture =
+  textureLoader.load(
+    "textures/marble.jpg"
+  );
+
+const wallTexture =
+  textureLoader.load(
+    "textures/wall.jpg"
+  );
+
+const woodTexture =
+  textureLoader.load(
+    "textures/wood.jpg"
+  );
+  const grassTexture =
+  textureLoader.load(
+    "textures/grass.jpg"
+  );
+
+grassTexture.wrapS =
+  THREE.RepeatWrapping;
+
+grassTexture.wrapT =
+  THREE.RepeatWrapping;
+
+grassTexture.repeat.set(
+  40,
+  40
+);
+  floorTexture.wrapS =
+  THREE.RepeatWrapping;
+
+floorTexture.wrapT =
+  THREE.RepeatWrapping;
+
+floorTexture.repeat.set(8, 8);
+
+// paredes
+wallTexture.wrapS =
+  THREE.RepeatWrapping;
+
+wallTexture.wrapT =
+  THREE.RepeatWrapping;
+
+wallTexture.repeat.set(4, 2);
+
+// madera
+woodTexture.wrapS =
+  THREE.RepeatWrapping;
+
+woodTexture.wrapT =
+  THREE.RepeatWrapping;
+
+woodTexture.repeat.set(1, 1);
+
+const scene = new THREE.Scene();
+scene.background =
+  new THREE.Color(
+    0x87ceeb
+  );
+
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
+
+// ======================
+// JUGADOR
+// ======================
+
+const player =
+  new THREE.Group();
+
+scene.add(player);
+
+player.add(camera);
+
+player.position.set(0, 1.6, 25);
+
+const renderer = new THREE.WebGLRenderer({
+  antialias: true
+});
+renderer.setPixelRatio(
+  Math.min(
+    window.devicePixelRatio,
+    1.2
+  )
+);
+renderer.shadowMap.enabled = true;
+
+renderer.shadowMap.type =
+  THREE.BasicShadowMap;
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// ======================
+// BRAZO IZQUIERDO
+// ======================
+
+const armMaterial =
+  new THREE.MeshStandardMaterial({
+    color: 0xffcc99
+  });
+
+
+// ======================
+// BRAZO DERECHO
+// ======================
+
+
+
+
+
+
+// luz ambiente
+
+const sunLight =
+  new THREE.DirectionalLight(
+    0xfff2cc,
+    0.01
+  );
+
+sunLight.position.set(
+  -20,
+  15,
+  10
+);
+
+scene.add(sunLight);
+
+const ambientLight =
+  new THREE.AmbientLight(
+    0xffffff,
+    0.4
+  );
+
+scene.add(ambientLight);
+
+// luz principal museo
+const mainLight =
+  new THREE.PointLight(
+    0xffeecc,
+    30,
+    100
+  );
+
+mainLight.castShadow = true;
+mainLight.shadow.mapSize.width = 1048;
+mainLight.shadow.mapSize.height = 1048;
+
+mainLight.shadow.bias = -0.0001;
+mainLight.position.set(0, 4, 2);
+
+scene.add(mainLight);
+// ======================
+// LUCES SALÓN FINAL
+// ======================
+
+const finalLightLeft =
+  new THREE.PointLight(
+    0xffd28a,
+    8,
+    12
+  );
+
+finalLightLeft.position.set(
+  -2,
+  6,
+  -34
+);
+
+scene.add(finalLightLeft);
+
+const finalLightRight =
+  new THREE.PointLight(
+    0xffd28a,
+    8,
+    12
+  );
+
+finalLightRight.position.set(
+  2,
+  6,
+  -34
+);
+
+scene.add(finalLightRight);
+const light2 =
+  new THREE.PointLight(
+    0xffeecc,
+    20,
+    50
+  );
+
+light2.position.set(0, 4, 25);
+
+scene.add(light2);
+
+light2.castShadow = true;
+
+const light3 =
+  new THREE.PointLight(
+    0xffeecc,
+    20,
+    50
+  );
+
+light3.position.set(0, 4, 15);
+
+scene.add(light3);
+
+light3.castShadow = true;
+
+// Piso
+const floor = new THREE.Mesh(
+
+  new THREE.PlaneGeometry(20, 60),
+
+  new THREE.MeshStandardMaterial({
+
+  map: floorTexture,
+  
+  envMapIntensity: 1,
+
+  roughness: 0.25,
+
+  metalness: 0.1
+
+})
+
+);
+
+floor.rotation.x = -Math.PI / 2;
+scene.add(floor);
+floor.receiveShadow = true;
+
+
+const walls = [];
+const doors = [];
+const interactables = [];
+function createWall(
+  width,
+  height,
+  depth,
+  x,
+  y,
+  z,
+  rotY = 0,
+  color = 0x999999
+) {
+
+  const wall = new THREE.Mesh(
+
+    new THREE.BoxGeometry(
+      width,
+      height,
+      depth
+    ),
+
+new THREE.MeshStandardMaterial({
+
+  map: wallTexture,
+  
+  envMapIntensity: 1,
+
+  roughness: 0.8,
+
+  metalness: 0.05
+
+})
+
+  );
+
+  wall.position.set(x, y, z);
+
+  wall.rotation.y = rotY;
+  
+wall.castShadow = true;
+
+wall.receiveShadow = true;
+
+  scene.add(wall);
+
+  walls.push(wall);
+
+}
+function createStairs(
+  x,
+  y,
+  z
+) {
+
+  for (let i = 0; i < 10; i++) {
+
+    const step =
+      new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+          4,
+          0.4,
+          1
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+          map: wallTexture
+
+        })
+
+      );
+
+    step.position.set(
+      x,
+      y + i * 0.4,
+      z - i
+    );
+
+    scene.add(step);
+
+    
+
+  }
+
+}
+// ======================
+// ESTANTERÍA FINAL
+// ======================
+
+// ======================
+// ESTANTERÍA ELEGANTE
+// ======================
+
+function createBookshelf(x, y, z) {
+
+  const material =
+    new THREE.MeshStandardMaterial({
+      map: woodTexture
+    });
+
+  // Tablero superior
+  const top = new THREE.Mesh(
+    new THREE.BoxGeometry(3, 0.15, 1),
+    material
+  );
+
+  top.position.set(x, y + 1, z);
+  top.castShadow = true;
+  top.receiveShadow = true;
+  scene.add(top);
+
+  // Repisa inferior
+  const bottom = new THREE.Mesh(
+    new THREE.BoxGeometry(3, 0.15, 1),
+    material
+  );
+
+  bottom.position.set(x, y + 0.2, z);
+  bottom.castShadow = true;
+  bottom.receiveShadow = true;
+  scene.add(bottom);
+
+  // Patas
+  const positions = [
+    [-1.35, 0.6, -0.35],
+    [ 1.35, 0.6, -0.35],
+    [-1.35, 0.6,  0.35],
+    [ 1.35, 0.6,  0.35]
+  ];
+
+  positions.forEach(p => {
+
+    const leg = new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        0.15,
+        1.2,
+        0.15
+      ),
+
+      material
+
+    );
+
+    leg.position.set(
+      x + p[0],
+      y + p[1],
+      z + p[2]
+    );
+
+    leg.castShadow = true;
+    leg.receiveShadow = true;
+
+    scene.add(leg);
+
+  });
+
+}
+// ======================
+// LIBRO
+// ======================
+
+// ======================
+// LIBRO FINAL
+// ======================
+
+let finalBook;
+let bookCover;
+let coverPivot;
+
+function createFinalBook(x, y, z){
+
+  finalBook = new THREE.Group();
+
+  // páginas
+  
+  const pages = new THREE.Mesh(
+
+    new THREE.BoxGeometry(
+      0.88,
+      0.08,
+      1
+    ),
+
+    new THREE.MeshStandardMaterial({
+      color: 0xf5f0dc
+    })
+
+  );
+
+  pages.castShadow = true;
+  pages.receiveShadow = true;
+pages.position.x = -0.30;
+  finalBook.add(pages);
+  const spine = new THREE.Mesh(
+  
+  new THREE.BoxGeometry(
+    0.02, // grosor
+    0.08, // altura
+    1 // largo
+  ),
+  
+  new THREE.MeshStandardMaterial({
+    color: 0x5b2c06
+  })
+  
+);
+
+spine.position.set(
+  -0.75,
+  0,
+  0
+);
+
+finalBook.add(spine);
+
+  // tapa
+  coverPivot = new THREE.Group();
+
+coverPivot.position.set(
+  -0.7,
+  0.065,
+  0
+);
+
+finalBook.add(coverPivot);
+
+bookCover = new THREE.Mesh(
+
+  new THREE.BoxGeometry(
+    0.9,
+    0.05,
+    1
+  ),
+
+  new THREE.MeshStandardMaterial({
+
+    map: bookCoverTexture
+
+  })
+
+);
+
+bookCover.position.x = 0.4;
+
+coverPivot.add(bookCover);
+
+  finalBook.position.set(
+    x,
+    y,
+    z
+  );
+
+  scene.add(finalBook);
+
+}
+const upperFloor =
+  new THREE.Mesh(
+
+    new THREE.BoxGeometry(
+      12,
+      0.5,
+      12
+    ),
+
+    new THREE.MeshStandardMaterial({
+
+      map: floorTexture
+
+    })
+
+  );
+
+upperFloor.position.set(
+  0,
+  3.8,
+  -30
+);
+// ======================
+// ALFOMBRA ROJA
+// ======================
+
+const carpet = new THREE.Mesh(
+
+  new THREE.PlaneGeometry(
+    2.2, // ancho
+    10   // largo
+  ),
+
+  new THREE.MeshStandardMaterial({
+
+    color: 0x8b0000,
+    roughness: 0.8
+
+  })
+
+);
+
+carpet.rotation.x = -Math.PI / 2;
+
+// Ajustaremos la posición si hace falta
+carpet.position.set(
+  0,
+  4.06,
+  -30
+);
+
+carpet.receiveShadow = true;
+
+scene.add(carpet);
+
+upperFloor.receiveShadow = true;
+
+scene.add(upperFloor);
+//walls.push(upperFloor);
+// ======================
+// CREAR CUADRO
+// ======================
+
+function createPainting(
+  texture,
+  x,
+  y,
+  z,
+  rotationY = 0
+) {
+
+  // marco
+  const frame =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        4.5,
+        3.5,
+        0.08
+      ),
+
+      new THREE.MeshStandardMaterial({
+        color: 0x3a2a1a,
+        roughness: 0.7
+      })
+
+    );
+
+  frame.position.set(x, y, z);
+
+  frame.rotation.y = rotationY;
+
+  scene.add(frame);
+
+  // imagen
+  const painting =
+    new THREE.Mesh(
+
+      new THREE.PlaneGeometry(
+        4,
+        3
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        map: texture
+
+      })
+
+    );
+
+  painting.position.set(
+    x,
+    y,
+    z + (
+      rotationY === 0
+      ? 0.05
+      : 0
+    )
+  );
+
+  if (rotationY !== 0) {
+
+    painting.position.x +=
+      Math.sin(rotationY) * 0.05;
+
+    painting.position.z +=
+      Math.cos(rotationY) * 0.05;
+
+  }
+
+  painting.rotation.y = rotationY;
+
+  scene.add(painting);
+
+}
+const stairsRoof =
+  new THREE.Mesh(
+
+    new THREE.BoxGeometry(
+      10,
+      0.5,
+      20
+    ),
+
+    new THREE.MeshStandardMaterial({
+
+      map: wallTexture
+
+    })
+
+  );
+
+stairsRoof.position.set(
+  0,
+  8.5,
+  -20
+);
+
+scene.add(stairsRoof);
+// ======================
+// VENTANA
+// ======================
+  function createTree(x, z) {
+
+  // tronco
+  const trunk =
+    new THREE.Mesh(
+
+      new THREE.CylinderGeometry(
+        0.2,
+        0.2,
+        2
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color: 0x6b4423
+
+      })
+
+    );
+
+  trunk.position.set(
+    x,
+    1,
+    z
+  );
+
+  scene.add(trunk);
+
+  // hojas
+  const leaves =
+    new THREE.Mesh(
+
+      new THREE.SphereGeometry(
+        1.2,
+        10,
+        10
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color: 0x2f7d32
+
+      })
+
+    );
+
+  leaves.position.set(
+    x,
+    3,
+    z
+  );
+
+  scene.add(leaves);
+
+}
+// ======================
+// PEDESTAL
+// ======================
+const upperCeiling =
+  new THREE.Mesh(
+
+    new THREE.BoxGeometry(
+      12,
+      0.5,
+      12
+    ),
+
+    new THREE.MeshStandardMaterial({
+
+      map: wallTexture
+
+    })
+
+  );
+
+upperCeiling.position.set(
+  0,
+  8.8,
+  -30
+);
+
+scene.add(upperCeiling);
+function createPedestal(
+  texture,
+  x,
+  z,
+  text
+) {
+
+  // columna
+  const pedestal =
+    new THREE.Mesh(
+
+      new THREE.BoxGeometry(
+        1.4,
+        1.6,
+        1.4
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        color: 0xffffff,
+
+        roughness: 0.7
+
+      })
+
+    );
+
+  pedestal.position.set(
+    x,
+    0.8,
+    z
+  );
+
+  pedestal.castShadow = true;
+  pedestal.receiveShadow = true;
+
+  scene.add(pedestal);
+
+  // imagen flotante
+  const art =
+    new THREE.Mesh(
+
+      new THREE.PlaneGeometry(
+        1.5,
+        1.5
+      ),
+
+      new THREE.MeshStandardMaterial({
+
+        map: texture,
+
+        transparent: true
+
+      })
+
+    );
+
+  art.position.set(
+    x,
+    2.4,
+    z
+  );
+
+  
+
+  scene.add(art);
+
+interactables.push({
+
+  mesh: pedestal,
+
+  art: art,
+
+  texture: texture,
+
+  text: text
+
+});
+
+}
+function createDoor(
+  width,
+  height,
+  depth,
+  x,
+  y,
+  z,
+  side = "left",
+  color = 0x4a2f1b
+) {
+
+  // grupo puerta
+  const pivot = new THREE.Group();
+
+  pivot.position.set(x, y, z);
+
+  scene.add(pivot);
+
+  // geometría puerta
+  const geometry =
+    new THREE.BoxGeometry(
+      width,
+      height,
+      depth
+    );
+
+const material =
+  new THREE.MeshStandardMaterial({
+
+    map: woodTexture,
+    
+    envMapIntensity: 1,
+
+    roughness: 0.7,
+
+    metalness: 0.1
+
+  });
+
+  const door =
+    new THREE.Mesh(
+      geometry,
+      material
+    );
+
+  // posición según bisagra
+  if (side === "left") {
+
+    door.position.x = width / 2;
+
+  }
+
+  else {
+
+    door.position.x = -width / 2;
+
+  }
+
+door.castShadow = true;
+
+door.receiveShadow = true;
+
+  pivot.add(door);
+
+  // datos
+  pivot.userData.isOpen = false;
+
+  pivot.userData.side = side;
+
+  pivot.userData.openAngle = 0;
+
+  pivot.userData.doorMesh = door;
+
+  doors.push(pivot);
+
+}
+
+// ======================
+// TECHO PRINCIPAL
+// ======================
+
+const roof = new THREE.Mesh(
+
+  new THREE.BoxGeometry(
+    20,
+    0.5,
+    45
+  ),
+
+  new THREE.MeshStandardMaterial({
+    color: 0xffffff
+  })
+
+);
+
+roof.position.set(0, 5.5, 12);
+
+scene.add(roof);
+
+// ======================
+// MUSEO PRINCIPAL
+// ======================
+
+// fondo izquierda
+createWall(
+  6, 10, 0.5,
+  -5, 2.5, -10
+);
+
+// fondo derecha
+createWall(
+  6, 10, 0.5,
+  5, 2.5, -10
+);
+
+// marco superior
+createWall(
+  4, 1, 0.5,
+  0, 4, -10
+);
+
+// puerta fondo
+createDoor(
+  4, 4, 0.2,
+  -2, 2, -10
+);
+
+// arriba ventana
+createWall(
+  0.5, 2, 20,
+  -8, 4.5, 0
+);
+
+// abajo ventana
+createWall(
+  0.5, 2, 20,
+  -8, 1, 0
+);
+
+// frente ventana
+createWall(
+  0.5, 2, 5,
+  -8, 3, -7.5
+);
+
+// centro
+createWall(
+  0.5, 2, 4,
+  -8, 3, 0
+);
+
+// atrás
+createWall(
+  0.5, 2, 5,
+  -8, 3, 7.5
+);
+
+// arriba ventana
+createWall(
+  0.5, 2, 20,
+  8, 4.5, 0
+);
+
+// abajo ventana
+createWall(
+  0.5, 2, 20,
+  8, 1, 0
+);
+
+// frente ventana
+createWall(
+  0.5, 2, 5,
+  8, 3, -7.5
+);
+
+// centro
+createWall(
+  0.5, 2, 4,
+  8, 3, 0
+);
+
+// atrás
+createWall(
+  0.5, 2, 5,
+  8, 3, 7.5
+);
+
+// entrada izquierda
+createWall(
+  6, 10, 0.5,
+  -5, 2.5, 10
+);
+
+// entrada derecha
+createWall(
+  6, 10, 0.5,
+  5, 2.5, 10
+);
+
+// marco superior puerta
+createWall(
+  -6, 3, 0.5,
+  0, 5.5, 50
+);
+
+// puertas
+createDoor(
+  2, 5, 0.2,
+  -2, 2, 10,
+  "left"
+);
+
+createDoor(
+  2, 5, 0.2,
+  2, 2, 10,
+  "right"
+);
+
+// techo entrada
+createWall(
+  6, 1, 0.5,
+  0, 5, 10
+);
+
+createTree(-20, -20);
+
+createTree(20, -15);
+
+createTree(-15, 20);
+
+createTree(25, 10);
+
+
+// ======================
+// SALA ESCALERAS
+// ======================
+
+// izquierda
+createWall(
+  3, 15, 0.5,
+  -3.5, 2.5, -20
+);
+
+// derecha
+createWall(
+  3, 15, 0.5,
+  3.5, 2.5, -20
+);
+
+// arriba
+
+
+
+
+// pared izquierda
+createWall(
+  0.5, 15, 10,
+  -5, 2.5, -15
+);
+
+// pared derecha
+createWall(
+  0.5, 15, 10,
+  5, 2.5, -15
+);
+createStairs(
+  0,
+  0.2,
+  -15
+);
+// ======================
+// CUADROS EN ESCALERAS
+// ======================
+
+// Pared izquierda
+createPainting(
+  pi2,
+  -4.7,   // x
+  4,    // altura
+  -15,    // z
+  Math.PI / 2
+);
+
+
+// Pared derecha
+createPainting(
+  pi1,
+  4.7,
+  4,
+  -15,
+  -Math.PI / 2
+);
+
+createBookshelf(
+  0,
+  4.10,
+  -35
+);
+// pared fondo
+createWall(
+  12, 5, 0.5,
+  0, 6.3, -36
+);
+
+// pared izquierda
+createWall(
+  0.5, 5, 12,
+  -6, 6.3, -30
+);
+
+// pared derecha
+createWall(
+  0.5, 5, 12,
+  6, 6.3, -30
+);
+createWall(
+  4, 1, 0.5,
+  0, 8, -24
+);
+createWall(
+  1, 5, 0.5,
+  -2.5, 6.3, -24
+);
+
+createWall(
+  1, 5, 0.5,
+  2.5, 6.3, -24
+);
+// lateral izquierdo entrada
+createWall(
+  4, 5, 0.5,
+  -5, 6.3, -24
+);
+
+// lateral derecho entrada
+createWall(
+  4, 5, 0.5,
+  5, 6.3, -24
+);
+
+// marco superior entrada
+createWall(
+  8, 1, 0.5,
+  0, 8.3, -24
+);
+// pared izquierda escalera
+createWall(
+  0.5, 15, 4,
+  -2.5, 2.5, -22
+);
+
+// pared derecha escalera
+createWall(
+  0.5, 15, 4,
+  2.5, 2.5, -22
+);
+// ======================
+// PEDESTALES
+// ======================
+
+// fila 1
+createPedestal(
+  pixel1,
+  -4,
+  3,
+  "Cuando me pasaste esta foto me encantó, estás toda hermosa y tierna, no sé que me hiciste para que me tengas asi mirando esta foto siempre"
+);
+
+createPedestal(
+  pixel2,
+  0,
+  3,
+  "Esta foto me encanta, fue en el dia que salimos del club de entrenar y fuimos a comer unos panchitos juntos 💝😽🌸"
+);
+
+createPedestal(
+  pixel3,
+  4,
+  3,
+  "Cuando fuiste a mi casa y probamos cambiar de género, todo un gay mi amor"
+);
+
+// fila 2
+
+createPedestal(
+  pixel4,
+  -4,
+  -3,
+  "El dia de mi cumpleaños, me puse feliz porque habías ido, y estabas tan preciosa como una princesa"
+);
+
+createPedestal(
+  pixel5,
+  0,
+  -3,
+  "Esta foto me gustó y quise agregarlo acá, aparte nos vemos re god"
+);
+
+createPedestal(
+  pixel6,
+  4,
+  -3,
+  "Me encanta como dormías y te tuve que sacar una foto, te ves muy bonita, adorable como mi bebé, ganas de llenarte a besos pero no te quería despertar "
+);
+// ======================
+// CUADROS ENTRADA
+// ======================
+
+// izquierda
+createPainting(
+  painting1,
+  -3.7,
+  2.2,
+  25,
+  Math.PI / 2
+);
+
+// derecha
+createPainting(
+  painting2,
+  3.7,
+  2.2,
+  25,
+  -Math.PI / 2
+);
+// ======================
+// PASILLO
+// ======================
+
+// ======================
+// PUERTA INTERIOR
+// ======================
+
+// marco izquierdo
+createWall(
+  2, 10, 0.5,
+  -3, 2.5, 20
+);
+
+// marco derecho
+createWall(
+  2, 10, 0.5,
+  3, 2.5, 20
+);
+
+// marco superior
+createWall(
+  4, 2, 0.5,
+  0, 5, 20
+);
+
+// puerta
+createDoor(
+  4, 4, 0.2,
+  -2, 2, 20
+);
+// izquierda
+createWall(
+  0.5, 10, 20,
+  -4, 2.5, 20
+);
+
+// derecha
+createWall(
+  0.5, 10, 20,
+  4, 2.5, 20
+);
+
+// fondo
+createWall(
+  8, 10, 0.5,
+  0, 2.5, 30
+);
+createFinalBook(
+  0,
+  5.25,
+  -35
+);
+
+// ======================
+// EXTERIOR
+// ======================
+
+const outsideFloor =
+  new THREE.Mesh(
+
+    new THREE.PlaneGeometry(
+      300,
+      300
+    ),
+
+    new THREE.MeshStandardMaterial({
+
+  map: grassTexture
+
+})
+  );
+
+outsideFloor.rotation.x =
+  -Math.PI / 2;
+
+outsideFloor.position.y =
+  -0.01;
+
+outsideFloor.receiveShadow =
+  true;
+
+scene.add(outsideFloor);
+// ======================
+// VENTANAS
+// ======================
+
+// izquierda
+
+// ======================
+// JOYSTICK ANALÓGICO
+// ======================
+
+const joystick = document.getElementById("joystick");
+
+let moveX = 0;
+let moveY = 0;
+
+joystick.addEventListener("touchmove", (e) => {
+
+  e.preventDefault();
+
+  const touch = e.touches[0];
+  const rect = joystick.getBoundingClientRect();
+
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+
+  let x = touch.clientX - rect.left - centerX;
+  let y = touch.clientY - rect.top - centerY;
+
+  const maxDistance = 50;
+
+  const distance = Math.sqrt(x * x + y * y);
+
+  if (distance > maxDistance) {
+    x = (x / distance) * maxDistance;
+    y = (y / distance) * maxDistance;
+  }
+
+  // valores entre -1 y 1
+  moveX = x / maxDistance;
+  moveY = y / maxDistance;
+
+});
+
+joystick.addEventListener("touchend", () => {
+
+  moveX = 0;
+  moveY = 0;
+
+});
+
+
+// ======================
+// ROTACIÓN FPS REAL
+// ======================
+
+let yaw = 0;   // izquierda/derecha
+let pitch = 0; // arriba/abajo
+
+// ======================
+// MULTITOUCH FPS
+// ======================
+
+let previousTouchX = null;
+let previousTouchY = null;
+
+document.addEventListener("touchstart", (e) => {
+
+  for (let touch of e.touches) {
+
+    // dedo derecho controla cámara
+    if (touch.clientX > window.innerWidth / 2) {
+
+      previousTouchX = touch.clientX;
+      previousTouchY = touch.clientY;
+
+    }
+
+  }
+
+});
+
+document.addEventListener("touchmove", (e) => {
+
+  for (let touch of e.touches) {
+
+    // SOLO lado derecho mueve cámara
+    if (touch.clientX > window.innerWidth / 2) {
+
+      if (previousTouchX !== null) {
+
+        const deltaX =
+          touch.clientX - previousTouchX;
+
+        const deltaY =
+          touch.clientY - previousTouchY;
+
+        // sensibilidad
+        targetYaw -= deltaX * 0.004;
+
+targetPitch -= deltaY * 0.004;
+
+        // límite vertical
+        const limit = Math.PI / 2 - 0.1;
+        
+        targetPitch = Math.max(
+  -limit,
+  Math.min(limit, targetPitch)
+);
+
+        pitch = Math.max(
+          -limit,
+          Math.min(limit, pitch)
+        );
+
+      }
+
+      previousTouchX = touch.clientX;
+      previousTouchY = touch.clientY;
+
+    }
+
+  }
+
+});
+
+document.addEventListener("touchend", () => {
+
+  previousTouchX = null;
+  previousTouchY = null;
+
+});
+
+// aplicar rotación FPS
+camera.rotation.order = "YXZ";
+camera.rotation.y = yaw;
+camera.rotation.x = pitch;
+camera.rotation.z = 0;
+
+// ======================
+// MOVIMIENTO FPS
+// ======================
+// ======================
+// INTERACTUAR PUERTAS
+// ======================
+
+document.addEventListener("dblclick", () => {
+
+  for (const door of doors) {
+
+    const distance =
+      player.position.distanceTo(
+        door.position
+      );
+
+    if (distance < 3) {
+
+      door.userData.isOpen =
+        !door.userData.isOpen;
+
+    }
+
+  }
+
+});
+let walkTime = 0;
+let targetYaw = 0;
+
+let targetPitch = 0;
+// ======================
+// LIBRO FINAL
+// ======================
+let bookOpenAmount = 0;
+
+
+let cinematicState = 0;
+let cinematicTimer = 0;
+// ======================
+// TEXTO CARTA
+// ======================
+
+const finalMessage =
+`Mi amor ❤️
+
+Si llegaste hasta esta última sala,
+es porque recorriste cada recuerdo
+que quise compartir con vos.
+
+Cada foto significa muchísimo para mí,
+pero lo más importante no son las fotos,
+sino todos los momentos que todavía
+nos quedan por vivir juntos.
+
+Gracias por hacerme tan feliz.
+
+Te amo muchísimo. ❤️`;
+
+let letterIndex = 0;
+let nearBook = false;
+let bookOpened = false;
+let bookCinematic = false;
+let cinematicTarget =
+  new THREE.Vector3(
+    0,
+    5.6,
+    -33.8
+  );
+const interactBtn =
+  document.getElementById(
+    "interactBtn"
+  );
+
+let currentInteractable = null;
+const artViewer =
+  document.getElementById(
+    "artViewer"
+  );
+  const bookLetter =
+document.getElementById(
+"bookLetter"
+);
+
+const letterText =
+document.getElementById(
+"letterText"
+);
+const closeBookBtn =
+document.getElementById(
+"closeBookBtn"
+);
+closeBookBtn.addEventListener(
+  "click",
+  () => {
+    finalSong.play();
+
+    bookLetter.style.display =
+      "none";
+
+    closeBookBtn.style.display =
+      "none";
+
+    bookCinematic = false;
+
+    bookOpened = false;
+
+    bookOpenAmount = 0;
+
+    if (coverPivot) {
+
+      coverPivot.rotation.z = 0;
+
+    }
+
+  }
+);
+
+const artImage =
+  document.getElementById(
+    "artImage"
+  );
+
+const artText =
+  document.getElementById(
+    "artText"
+  );
+
+const closeArt =
+  document.getElementById(
+    "closeArt"
+  );
+function animate() {
+
+  requestAnimationFrame(animate);
+
+  const speed =
+  bookCinematic ? 0 : 0.20;
+
+// aplicar rotación FPS
+camera.rotation.order = "YXZ";
+camera.rotation.y = yaw;
+camera.rotation.x = pitch;
+camera.rotation.z = 0;
+  // dirección frontal
+  const forward = new THREE.Vector3();
+
+  camera.getWorldDirection(forward);
+
+  forward.y = 0;
+  forward.normalize();
+
+  // dirección lateral
+  const right = new THREE.Vector3();
+
+  right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+
+// ======================
+// MOVIMIENTO + COLISIONES
+// ======================
+
+
+
+const movement = new THREE.Vector3();
+
+// adelante/atrás
+movement.add(
+  forward.clone().multiplyScalar(-moveY * speed)
+);
+
+// izquierda/derecha
+movement.add(
+  right.clone().multiplyScalar(moveX * speed)
+);
+
+const isMoving =
+  movement.length() > 0.001;
+// ======================
+// MOVIMIENTO + SLIDING
+// ======================
+
+const tryPosition =
+  player.position.clone().add(movement);
+  
+
+
+// hitbox jugador
+function playerBox(pos) {
+
+  return new THREE.Box3(
+
+    new THREE.Vector3(
+      pos.x - 0.3,
+      pos.y - 1.6,
+      pos.z - 0.3
+    ),
+
+    new THREE.Vector3(
+      pos.x + 0.3,
+      pos.y + 0.2,
+      pos.z + 0.3
+    )
+
+  );
+
+}
+interactBtn.addEventListener(
+  "click",
+  () => {
+
+if (nearBook && !bookOpened) {
+
+  bookOpened = true;
+  bookCinematic = true;
+
+  cinematicState = 1;
+  cinematicTimer = 0;
+
+  return;
+
+}
+
+    
+
+    // ===== PEDESTALES =====
+    if (!currentInteractable)
+      return;
+
+    artViewer.style.display =
+      "flex";
+
+    artImage.src =
+      currentInteractable.art
+      .material.map.image.currentSrc;
+
+    artText.innerText =
+      currentInteractable.text;
+
+  }
+);
+closeArt.addEventListener(
+  "click",
+  () => {
+
+    artViewer.style.display =
+      "none";
+
+  }
+);
+
+
+// detectar choque
+function collides(pos) {
+
+  const pBox = playerBox(pos);
+
+  // paredes
+  for (const wall of walls) {
+
+    const wallBox =
+      new THREE.Box3().setFromObject(wall);
+
+    if (wallBox.intersectsBox(pBox)) {
+
+      return true;
+
+    }
+
+  }
+
+  // puertas
+  for (const door of doors) {
+
+    if (door.userData.isOpen) continue;
+
+    const mesh =
+      door.userData.doorMesh;
+
+    mesh.updateWorldMatrix(
+      true,
+      false
+    );
+
+    const doorBox =
+      new THREE.Box3()
+      .setFromObject(mesh);
+
+    if (doorBox.intersectsBox(pBox)) {
+
+      return true;
+
+    }
+
+  }
+
+  return false;
+
+}
+
+// mover completo
+if (!collides(tryPosition)) {
+
+  player.position.copy(tryPosition);
+if (
+  player.position.z < -14 &&
+  player.position.z > -24 &&
+  Math.abs(player.position.x) < 2
+) {
+
+  // escalera
+  player.position.y =
+    1.6 +
+    (-14 - player.position.z) * 0.2;
+
+}
+
+else if (
+  player.position.z <= -24
+) {
+
+  // segundo piso
+  player.position.y = 4.05;
+
+}
+
+else {
+
+  // planta baja
+  player.position.y = 1.6;
+
+}
+}
+
+// sliding X
+else {
+
+  const slideX =
+    player.position.clone();
+
+  slideX.x += movement.x;
+
+  if (!collides(slideX)) {
+
+    player.position.x =
+      slideX.x;
+
+  }
+
+  const slideZ =
+    player.position.clone();
+
+  slideZ.z += movement.z;
+
+  if (!collides(slideZ)) {
+
+    player.position.z =
+      slideZ.z;
+
+  }
+
+}
+
+// ======================
+// ANIMAR PUERTAS
+// ======================
+
+for (const door of doors) {
+
+  let targetAngle = 0;
+
+  if (door.userData.isOpen) {
+
+    if (door.userData.side === "left") {
+
+      targetAngle = -Math.PI / 2;
+
+    }
+
+    else {
+
+      targetAngle = Math.PI / 2;
+
+    }
+
+  }
+
+  door.rotation.y +=
+    (targetAngle - door.rotation.y) * 0.08;
+
+// ======================
+// HEAD BOB
+// ======================
+
+if (isMoving) {
+
+  walkTime += 0.12;
+
+  // subir/bajar
+  camera.position.y =
+    1.6 +
+    Math.sin(walkTime * 2) * 0.03;
+
+  // inclinación lateral
+  camera.rotation.z =
+    Math.sin(walkTime) * 0.01;
+
+}
+
+else {
+
+  // volver suave
+  camera.position.y +=
+    (1.6 - camera.position.y)
+    * 1;
+
+  camera.rotation.z +=
+    (0 - camera.rotation.z)
+    * 0.1;
+
+}
+// ======================
+// SUAVIZADO CÁMARA
+// ======================
+
+yaw +=
+  (targetYaw - yaw) * 0.1;
+
+pitch +=
+  (targetPitch - pitch) * 0.1;
+}
+// ======================
+// INTERACCIÓN
+// ======================
+
+currentInteractable = null;
+
+for (const item of interactables) {
+
+  const distance =
+    player.position.distanceTo(
+      item.mesh.position
+    );
+
+  if (distance < 2.5) {
+
+    currentInteractable = item;
+
+  }
+
+}
+
+if (currentInteractable) {
+
+  interactBtn.style.display =
+    "block";
+
+}
+
+else {
+
+  interactBtn.style.display =
+    "none";
+for (const item of interactables) {
+
+  interactables.forEach(item => {
+
+  item.art.lookAt(
+    player.position.x,
+    item.art.position.y,
+    player.position.z
+  );
+});
+}
+// ======================
+// DETECTAR LIBRO
+// ======================
+
+nearBook = false;
+
+if (finalBook && !bookOpened) {
+
+  const distance =
+    player.position.distanceTo(
+      finalBook.position
+    );
+
+  if (distance < 2.2) {
+
+    nearBook = true;
+
+  }
+
+}
+if (nearBook) {
+
+  interactBtn.style.display =
+    "block";
+
+  interactBtn.innerText =
+    "📖 Abrir libro";
+
+}
+// ======================
+// CINEMÁTICA LIBRO
+// ======================
+
+if (bookCinematic) {
+
+  player.position.lerp(
+
+    cinematicTarget,
+
+    0.03
+
+  );
+
+}
+
+// ======================
+// ABRIR LIBRO
+// ======================
+
+if (bookCinematic && bookCover) {
+
+  bookOpenAmount +=
+    (Math.PI / 3 - bookOpenAmount)
+    * 0.05;
+
+  
+coverPivot.rotation.z =
+  bookOpenAmount;
+
+}
+// ======================
+// CONTROL CINEMÁTICA
+// ======================
+
+if (bookCinematic) {
+
+  cinematicTimer++;
+
+  switch (cinematicState) {
+
+    case 1:
+
+  player.position.lerp(
+    cinematicTarget,
+    0.03
+  );
+
+  camera.lookAt(
+    finalBook.position
+  );
+
+  // PRUEBA: pasar automáticamente al estado 2
+  if (cinematicTimer > 120) {
+
+    console.log("PASÓ A ESTADO 2");
+
+    cinematicState = 2;
+    cinematicTimer = 0;
+
+  }
+
+  break;
+
+case 2:
+
+  if (cinematicTimer > 30) {
+
+    console.log("MOSTRANDO CARTA");
+
+    bookLetter.style.display = "flex";
+
+    letterIndex = 0;
+    letterText.innerText = "";
+
+    cinematicState = 3;
+    cinematicTimer = 0;
+
+  }
+
+  break;
+case 3:
+
+  if (
+    letterIndex <
+    finalMessage.length
+  ) {
+
+    letterText.innerText =
+      finalMessage.substring(
+        0,
+        letterIndex
+      );
+
+    letterIndex++;
+
+  }
+  else{
+
+    closeBookBtn.style.display =
+      "block";
+
+  }
+
+  break;
+  }
+
+
+}
+if(finalBook){
+
+  finalBook.position.y =
+    5.3 + Math.sin(Date.now()*0.0015)*0.03;
+
+}
+}
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+console.log(player.position.y);
+
+// Responsive
+window.addEventListener("resize", () => {
+
+  camera.aspect =
+    window.innerWidth / window.innerHeight;
+
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+  );
+
+});
