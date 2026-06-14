@@ -1574,20 +1574,7 @@ let cinematicTimer = 0;
 // ======================
 
 const finalMessage =
-`Mi amor ❤️
-
-Si llegaste hasta esta última sala,
-es porque recorriste cada recuerdo
-que quise compartir con vos.
-
-Cada foto significa muchísimo para mí,
-pero lo más importante no son las fotos,
-sino todos los momentos que todavía
-nos quedan por vivir juntos.
-
-Gracias por hacerme tan feliz.
-
-Te amo muchísimo. ❤️`;
+`Hola mi bebé hermosa, es la primera vez que hago un tipo juego para alguien, creo que es lo mas largo que hice, aparte que también la hacia re larga pero bueno, quiero que sepas lo mucho que te adoro, te aprecio, te anhelo, te admiro y sobre todo lo mucho que te amo, gracias por llegar a mi vida, se que tenemos diferencias, pensamos distinto en algunas cosas pero aun asi no veo el motivo para no amarte mas de lo que te amo, gracias por sacarme sonrisas, por amarme, por aguantarme, por tenerme paciencia, por soportar algunas cosas mías. Realmente te mereces demasiadas cosas y yo quiero ser el que te de eso, perdón por lo que pasaste conmigo y por lo que pase, mi corazón siempre te va a pertenecer y mi alma siempre te seguirá, sos una mujer increíble, inteligente, carismática, divertida, hermosa, inigualable, unica, perfecta. Tengo tantas palabras para decirte pero con esto ya digo mucho de lo que siento por vos. Me da cosa algunas veces no poder invitarte a desayunar algun lado o ir de viaje por ahi, muchas cosas dan ganas de hacer con vos pero por el momento me detiene, aun asi quiero seguir enamorandote todos los días, semanas, meses, años, siempre. Y la canción que va a sonar cuando cerres esto te la dedico 😽💝. Las fotos que viste son los recuerdos que me gustaron y pienso, más adelante quiero crear mas recuerdos con vos y hacer uno mejor. Aun me acuerdo el dia que te conocí por primera vez, tan sociable y divertida, hablando, conversadora y tan hermosa, no dejaba de mirarte me acuerdo, igual que las veces que te veía, nunca dejas de estar tan preciosa. Me encanta estar con vos, abrazarte, darte besos, darte cariñito, escucharte, verte, tocarte, tenés unos ojos preciosos, un pelo brillante, un cuerpo increíble, una carita tierna, piernas encantadoras, todo de vos me encanta. Estoy feliz de estar con vos y voy a estarlo toda mi vida siempre que estes conmigo y nunca me sueltes la mano, realmente me haces bien. Otra cosa que quiero pedirte es que cuando termine la canción, cerres los ojos. 😽`;
 
 let letterIndex = 0;
 let nearBook = false;
